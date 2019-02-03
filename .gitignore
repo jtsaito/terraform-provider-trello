@@ -14,5 +14,7 @@
 # Terraform files
 .terraform/
 *.tf
-set_env.sh
 crash.log
+set_env.sh
+terraform.tfstate
+terraform.tfstate.backup
