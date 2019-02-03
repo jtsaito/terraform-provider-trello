@@ -15,3 +15,4 @@
 .terraform/
 *.tf
 set_env.sh
+crash.log
