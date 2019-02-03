@@ -14,3 +14,4 @@
 # Terraform files
 .terraform/
 *.tf
+set_env.sh
