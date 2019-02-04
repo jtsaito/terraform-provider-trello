@@ -1,9 +1,9 @@
-package main
+package trello
 
 import (
 	"fmt"
 
-	"github.com/adlio/trello"
+	trello "github.com/adlio/trello"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -25,7 +25,7 @@ func dataSourceTrelloBoard() *schema.Resource {
 }
 
 func dataSourceTrelloBoardRead(d *schema.ResourceData, m interface{}) error {
-	member := m.(*TrelloConfig).Member
+	member := m.(*Config).Member
 
 	boards, err := member.GetBoards(trello.Defaults())
 	if err != nil {
