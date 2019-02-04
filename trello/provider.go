@@ -1,9 +1,9 @@
-package main
+package trello
 
 import (
 	"log"
 
-	"github.com/adlio/trello"
+	trello "github.com/adlio/trello"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -34,8 +34,8 @@ func Provider() *schema.Provider {
 	}
 }
 
-// TrelloConfig is a container for all Trello related configuration
-type TrelloConfig struct {
+// Config is a container for all Trello related configuration
+type Config struct {
 	Client *trello.Client
 	Member *trello.Member
 }
@@ -51,5 +51,5 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 
 	log.Println("[INFO] Trello client and member initialised")
 
-	return &TrelloConfig{client, member}, nil
+	return &Config{client, member}, nil
 }
