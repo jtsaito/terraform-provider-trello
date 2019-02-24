@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/hashicorp/terraform/plugin"
 	"github.com/hashicorp/terraform/terraform"
-	trello "github.com/jtsaito/terraform-provider-trello/trello"
+	"github.com/jtsaito/terraform-provider-trello/trello"
 )
 
 func main() {

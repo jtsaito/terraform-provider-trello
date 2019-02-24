@@ -3,12 +3,13 @@ package trello
 import (
 	"log"
 
-	trello "github.com/adlio/trello"
+	"github.com/adlio/trello"
 	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform/terraform"
 )
 
 // Provider defines the schema for the Trello provider
-func Provider() *schema.Provider {
+func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"api_key": {
@@ -27,8 +28,8 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("TRELLO_TOKEN", nil),
 			},
 		},
-		DataSourcesMap: map[string]*schema.Resource{
-			"trello_board": dataSourceTrelloBoard(),
+		ResourcesMap: map[string]*schema.Resource{
+			"trello_board": resourceTrelloBoard(),
 		},
 		ConfigureFunc: providerConfigure,
 	}
