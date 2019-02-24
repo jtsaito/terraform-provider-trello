@@ -8,6 +8,8 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
+const TrelloAPINotFoundMessage = "The requested resource was not found."
+
 var testAccProviders map[string]terraform.ResourceProvider
 var testAccProvider *schema.Provider
 
