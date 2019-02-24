@@ -27,8 +27,6 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("TRELLO_TOKEN", nil),
 			},
 		},
-		DataSourcesMap: map[string]*schema.Resource{
-			"trello_board": dataSourceTrelloBoard(),
 		},
 		ConfigureFunc: providerConfigure,
 	}
