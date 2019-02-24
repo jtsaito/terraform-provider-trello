@@ -3,7 +3,7 @@ package trello
 import (
 	"log"
 
-	trello "github.com/adlio/trello"
+	"github.com/adlio/trello"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
