@@ -60,10 +60,10 @@ func resourceTrelloBoardCreate(d *schema.ResourceData, meta interface{}) error {
 
 	b := trello.Board{
 		Closed:         d.Get("closed").(bool),
-		Name:           d.Get("name").(string),
 		Desc:           d.Get("description").(string),
-		Pinned:         d.Get("pinned").(bool),
 		IDOrganization: d.Get("organization_id").(string),
+		Name:           d.Get("name").(string),
+		Pinned:         d.Get("pinned").(bool),
 	}
 
 	err := client.CreateBoard(&b, trello.Defaults())
