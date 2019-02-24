@@ -14,17 +14,17 @@ func resourceTrelloBoard() *schema.Resource {
 		Delete: resourceTrelloBoardDelete,
 
 		Schema: map[string]*schema.Schema{
-			"description": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				ForceNew: true,
-				Computed: false,
-			},
 			"closed": &schema.Schema{
 				Type:     schema.TypeBool,
 				Optional: true,
 				ForceNew: true,
 				Default:  false,
+			},
+			"description": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+				Computed: false,
 			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
