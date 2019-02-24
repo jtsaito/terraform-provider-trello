@@ -24,7 +24,13 @@ func TestAccTrelloBoardBasic(t *testing.T) {
 				Config: testAccTrelloResourceBasic(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckTrelloResourceExists(rName),
+					resource.TestCheckResourceAttr("trello_board.test-board", "closed", "false"),
+					resource.TestCheckResourceAttr("trello_board.test-board", "description", "A test description."),
 					resource.TestCheckResourceAttr("trello_board.test-board", "name", rName),
+					resource.TestCheckResourceAttr("trello_board.test-board", "organization_id", ""),
+					resource.TestCheckResourceAttr("trello_board.test-board", "pinned", "false"),
+					resource.TestCheckResourceAttrSet("trello_board.test-board", "short_url"),
+					resource.TestCheckResourceAttrSet("trello_board.test-board", "url"),
 				),
 			},
 		},
@@ -60,7 +66,8 @@ func testAccTrelloResourceBasic(resourceName string) string {
 
 const testAccTrelloResourceBasicTemplate = `
   resource "trello_board" "test-board" {
-	  name = "%s"
+	  name        = "%s"
+	  description = "A test description."
 	}
 `
 

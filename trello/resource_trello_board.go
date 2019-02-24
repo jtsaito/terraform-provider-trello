@@ -16,12 +16,40 @@ func resourceTrelloBoard() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"description": &schema.Schema{
 				Type:     schema.TypeString,
-				Computed: true,
+				Optional: true,
+				ForceNew: true,
+				Computed: false,
+			},
+			"closed": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				ForceNew: true,
+				Default:  false,
 			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
+			},
+			"organization_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+				Default:  "",
+			},
+			"pinned": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				ForceNew: true,
+				Default:  false,
+			},
+			"short_url": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"url": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 		},
 	}
@@ -30,7 +58,13 @@ func resourceTrelloBoard() *schema.Resource {
 func resourceTrelloBoardCreate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*Config).Client
 
-	b := trello.Board{Name: d.Get("name").(string)}
+	b := trello.Board{
+		Closed:         d.Get("closed").(bool),
+		Name:           d.Get("name").(string),
+		Desc:           d.Get("description").(string),
+		Pinned:         d.Get("pinned").(bool),
+		IDOrganization: d.Get("organization_id").(string),
+	}
 
 	err := client.CreateBoard(&b, trello.Defaults())
 	if err != nil {
@@ -60,8 +94,13 @@ func resourceTrelloBoardRead(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	d.SetId(board.ID)
-	d.Set("name", board.Name)
+	d.Set("closed", board.Closed)
 	d.Set("description", board.Desc)
+	d.Set("name", board.Name)
+	d.Set("organization_id", board.IDOrganization)
+	d.Set("pinned", board.Pinned)
+	d.Set("url", board.URL)
+	d.Set("short_url", board.ShortURL)
 
 	return nil
 }
