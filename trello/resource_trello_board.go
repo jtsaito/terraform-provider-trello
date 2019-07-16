@@ -11,6 +11,7 @@ func resourceTrelloBoard() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceTrelloBoardCreate,
 		Read:   resourceTrelloBoardRead,
+		Update: resourceTrelloBoardUpdate,
 		Delete: resourceTrelloBoardDelete,
 
 		Schema: map[string]*schema.Schema{
@@ -23,13 +24,11 @@ func resourceTrelloBoard() *schema.Resource {
 			"description": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				ForceNew: true,
 				Computed: false,
 			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
 			"organization_id": &schema.Schema{
 				Type:     schema.TypeString,
@@ -103,6 +102,24 @@ func resourceTrelloBoardRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("short_url", board.ShortURL)
 
 	return nil
+}
+
+// resourceTrelloBoardUpdate will overwrite with board default values!
+func resourceTrelloBoardUpdate(d *schema.ResourceData, meta interface{}) error {
+	client := meta.(*Config).Client
+
+	b := trello.Board{
+		ID:   d.Id(),
+		Desc: d.Get("description").(string),
+		Name: d.Get("name").(string),
+	}
+
+	err := client.PutBoard(&b, trello.Defaults())
+	if err != nil {
+		return fmt.Errorf("could not put board: %s", err)
+	}
+
+	return resourceTrelloBoardRead(d, meta)
 }
 
 func resourceTrelloBoardDelete(d *schema.ResourceData, meta interface{}) error {

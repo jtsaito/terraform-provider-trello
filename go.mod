@@ -3,7 +3,7 @@ module github.com/jtsaito/terraform-provider-trello
 go 1.12
 
 require (
-	github.com/adlio/trello v1.0.0
+	github.com/adlio/trello v1.0.1-0.20190716035708-3f3c7dc35115
 	github.com/apparentlymart/go-cidr v1.0.0 // indirect
 	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect

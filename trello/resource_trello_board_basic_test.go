@@ -33,6 +33,19 @@ func TestAccTrelloBoardBasic(t *testing.T) {
 					resource.TestCheckResourceAttrSet("trello_board.test-board", "url"),
 				),
 			},
+			{
+				Config: testAccTrelloResourceBasicUpdate(rName),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckTrelloResourceExists(fmt.Sprintf("%s updated", rName)),
+					resource.TestCheckResourceAttr("trello_board.test-board", "closed", "false"),
+					resource.TestCheckResourceAttr("trello_board.test-board", "description", "A test description. updated"),
+					resource.TestCheckResourceAttr("trello_board.test-board", "name", fmt.Sprintf("%s updated", rName)),
+					resource.TestCheckResourceAttr("trello_board.test-board", "organization_id", ""),
+					resource.TestCheckResourceAttr("trello_board.test-board", "pinned", "false"),
+					resource.TestCheckResourceAttrSet("trello_board.test-board", "short_url"),
+					resource.TestCheckResourceAttrSet("trello_board.test-board", "url"),
+				),
+			},
 		},
 	})
 }
@@ -68,6 +81,17 @@ const testAccTrelloResourceBasicTemplate = `
   resource "trello_board" "test-board" {
 	  name        = "%s"
 	  description = "A test description."
+	}
+`
+
+func testAccTrelloResourceBasicUpdate(resourceName string) string {
+	return fmt.Sprintf(testAccTrelloResourceBasicUpdateTemplate, resourceName)
+}
+
+const testAccTrelloResourceBasicUpdateTemplate = `
+  resource "trello_board" "test-board" {
+	  name        = "%s updated"
+	  description = "A test description. updated"
 	}
 `
 
