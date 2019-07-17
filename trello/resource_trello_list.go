@@ -9,6 +9,7 @@ import (
 
 func resourceTrelloList() *schema.Resource {
 	return &schema.Resource{
+		Delete: resourceTrelloListDelete,
 		Schema: map[string]*schema.Schema{
 			"board_id": &schema.Schema{
 				Type:     schema.TypeString,
@@ -34,4 +35,9 @@ func resourceTrelloList() *schema.Resource {
 			},
 		},
 	}
+}
+func resourceTrelloListDelete(d *schema.ResourceData, meta interface{}) error {
+	// the TrelloAPI does not supported deleting lists. lists may only be archived.
+	// https://developers.trello.com/reference/#lists
+	return nil
 }
