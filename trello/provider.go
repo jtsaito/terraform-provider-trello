@@ -30,6 +30,7 @@ func Provider() terraform.ResourceProvider {
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"trello_board": resourceTrelloBoard(),
+			"trello_list":  resourceTrelloList(),
 		},
 		ConfigureFunc: providerConfigure,
 	}
