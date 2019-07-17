@@ -10,6 +10,7 @@ import (
 func resourceTrelloList() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceTrelloListCreate,
+		Read:   resourceTrelloListRead,
 		Delete: resourceTrelloListDelete,
 		Schema: map[string]*schema.Schema{
 			"board_id": &schema.Schema{
@@ -54,6 +55,22 @@ func resourceTrelloListCreate(d *schema.ResourceData, meta interface{}) error {
 	d.SetId(list.ID)
 
 	return resourceTrelloListRead(d, meta)
+}
+
+func resourceTrelloListRead(d *schema.ResourceData, meta interface{}) error {
+	client := meta.(*Config).Client
+
+	list, err := client.GetList(d.Id(), trello.Defaults())
+	if err != nil || list == nil || list.ID == "" {
+		return fmt.Errorf("could not create list: %s", err)
+	}
+
+	d.Set("board_id", list.IDBoard)
+	d.Set("name", list.Name)
+	d.Set("closed", list.Closed)
+	d.Set("pos", list.Pos)
+
+	return nil
 }
 func resourceTrelloListDelete(d *schema.ResourceData, meta interface{}) error {
 	// the TrelloAPI does not supported deleting lists. lists may only be archived.
