@@ -5,8 +5,13 @@ DIR=~/.terraform.d/plugins
 
 default: build
 
-build:
-	go install
+build: build-linux
+
+build-darwin:
+		GOOS=darwin GOARCH=amd64 go install
+
+build-linux:
+		GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go install
 
 install:
 	mkdir -vp $(DIR)
@@ -30,4 +35,4 @@ vet:
 fmt:
 	gofmt -w $(GOFMT_FILES)
 
-.PHONY: build testacc uninstall vet fmt
+.PHONY: build build-darwin build-linux testacc uninstall vet fmt
