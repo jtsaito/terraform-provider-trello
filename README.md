@@ -15,3 +15,7 @@ Acceptance tests are run like this:
 ```
 TRELLO_MEMBER_ID=<your-user-id> TRELLO_TOKEN=<your-token> TRELLO_API_KEY=<your-api-ke> make testacc
 ```
+
+## Releasing a version
+
+Release builds are automatically created and uploaded from Travis CI to GitHub by [Travis CI integration](https://github.com/jtsaito/terraform-provider-trello/blob/master/.travis.yml). To trigger the build, just [create a release](https://github.com/jtsaito/terraform-provider-trello/releases/new). The release name has to match the semantic version naming scheme.
