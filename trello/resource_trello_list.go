@@ -72,6 +72,7 @@ func resourceTrelloListRead(d *schema.ResourceData, meta interface{}) error {
 
 	return nil
 }
+
 func resourceTrelloListDelete(d *schema.ResourceData, meta interface{}) error {
 	// the TrelloAPI does not supported deleting lists. lists may only be archived.
 	// https://developers.trello.com/reference/#lists
