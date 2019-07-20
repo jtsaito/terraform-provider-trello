@@ -60,11 +60,9 @@ func testAccCheckTrelloBoardResourceDestroy(s *terraform.State) error {
 		}
 
 		_, err := client.GetBoard(rs.Primary.ID, trello.Defaults())
-
 		if err == nil {
-			return fmt.Errorf("Trello board %s still exists", rs.Primary.ID)
+			return fmt.Errorf("trello board %s still exists", rs.Primary.ID)
 		}
-
 		if !strings.Contains(err.Error(), TrelloAPINotFoundMessage) {
 			return err
 		}
@@ -100,7 +98,7 @@ func testAccCheckTrelloResourceExists(resourceName string) resource.TestCheckFun
 		member := testAccProvider.Meta().(*Config).Member
 		boards, err := member.GetBoards(trello.Defaults())
 		if err != nil {
-			return fmt.Errorf("Trello board %s does not exist", resourceName)
+			return fmt.Errorf("on fetching boards for %s: %e", resourceName, err)
 		}
 
 		var board *trello.Board

@@ -9,6 +9,7 @@ import (
 )
 
 const TrelloAPINotFoundMessage = "The requested resource was not found."
+const TrelloSDKNotFoundMessage = "404: model not found"
 
 var testAccProviders map[string]terraform.ResourceProvider
 var testAccProvider *schema.Provider
