@@ -36,18 +36,21 @@ func testAccCheckTrelloListResourceDestroy(s *terraform.State) error {
 	client := testAccProvider.Meta().(*Config).Client
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "trello_board" {
-			continue
-		}
+		if rs.Type == "trello_board" {
+			_, err := client.GetBoard(rs.Primary.ID, trello.Defaults())
 
-		_, err := client.GetBoard(rs.Primary.ID, trello.Defaults())
+			if err == nil {
+				return fmt.Errorf("Trello board %s still exists", rs.Primary.ID)
+			}
 
-		if err == nil {
-			return fmt.Errorf("Trello board %s still exists", rs.Primary.ID)
-		}
-
-		if !strings.Contains(err.Error(), TrelloAPINotFoundMessage) {
-			return err
+			if !strings.Contains(err.Error(), TrelloAPINotFoundMessage) {
+				return err
+			}
+		} else if rs.Type == "trello_list" {
+			l, err := client.GetList(rs.Primary.ID, trello.Defaults())
+			if !strings.Contains(err.Error(), TrelloSDKNotFoundMessage) {
+				return err
+			}
 		}
 	}
 
