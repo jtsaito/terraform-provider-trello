@@ -60,11 +60,9 @@ func testAccCheckTrelloBoardResourceDestroy(s *terraform.State) error {
 		}
 
 		_, err := client.GetBoard(rs.Primary.ID, trello.Defaults())
-
 		if err == nil {
 			return fmt.Errorf("Trello board %s still exists", rs.Primary.ID)
 		}
-
 		if !strings.Contains(err.Error(), TrelloAPINotFoundMessage) {
 			return err
 		}
