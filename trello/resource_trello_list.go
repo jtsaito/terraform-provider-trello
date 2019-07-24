@@ -33,7 +33,7 @@ func resourceTrelloList() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 				ForceNew: true,
-				Default:  8192,
+				Default:  16384,
 			},
 		},
 	}
