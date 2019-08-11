@@ -47,7 +47,7 @@ func testAccCheckTrelloListResourceDestroy(s *terraform.State) error {
 				return err
 			}
 		} else if rs.Type == "trello_list" {
-			l, err := client.GetList(rs.Primary.ID, trello.Defaults())
+			_, err := client.GetList(rs.Primary.ID, trello.Defaults())
 			if !strings.Contains(err.Error(), TrelloSDKNotFoundMessage) {
 				return err
 			}

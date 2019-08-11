@@ -64,8 +64,9 @@ func resourceTrelloBoardCreate(d *schema.ResourceData, meta interface{}) error {
 		Name:           d.Get("name").(string),
 		Pinned:         d.Get("pinned").(bool),
 	}
+	args := trello.Arguments{"defaultLists": "false"}
 
-	err := client.CreateBoard(&b, trello.Defaults())
+	err := client.CreateBoard(&b, args)
 	if err != nil {
 		return fmt.Errorf("could not create board: %s", err)
 	}
